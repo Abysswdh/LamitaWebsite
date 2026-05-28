@@ -70,16 +70,13 @@ function SectionTitle({
 
 /* ──────────────────────── team data ──────────────────────── */
 
-// use translations for content so it supports both languages
-const useTranslations = (locale: "id" | "en") => getTentangKamiTranslations(locale as any);
-
 /* ══════════════════════════════════════════════════════════════ */
 /*  MAIN COMPONENT                                              */
 /* ══════════════════════════════════════════════════════════════ */
 
 export default function TentangKamiContent() {
   const { locale } = useLocale();
-  const t = useTranslations(locale);
+  const t = getTentangKamiTranslations(locale);
   return (
     <div className="bg-[#0D0D0D]">
       {/* ─── HERO ─── */}
@@ -203,7 +200,7 @@ export default function TentangKamiContent() {
             {/* Vertical line */}
             <div className="absolute left-4 md:left-1/2 md:-translate-x-[0.5px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#C8A96E]/40 via-[#C8A96E]/20 to-transparent" />
 
-            {t.timeline.map((item: { year: string; title: string; desc: string }, i: number) => (
+            {t.timeline.map((item, i) => (
               <motion.div
                 key={item.year}
                 initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
@@ -262,7 +259,7 @@ export default function TentangKamiContent() {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-            {t.teamMembers.map((member: any, i: number) => (
+            {t.teamMembers.map((member, i) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, y: 30 }}
@@ -293,7 +290,7 @@ export default function TentangKamiContent() {
 
                 {/* Responsibilities */}
                 <div className="flex flex-wrap gap-2">
-                  {member.responsibilities.map((r: string) => (
+                  {member.responsibilities.map((r) => (
                     <span
                       key={r}
                       className="px-3 py-1.5 text-[10px] tracking-wider text-[#9A9A9A] bg-[#1A1A1A] rounded-full border border-[#2A2A2A]"

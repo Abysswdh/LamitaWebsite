@@ -93,6 +93,8 @@ export const tentangKamiTranslations = {
 
 export type Lang = "id" | "en";
 
-export function getTentangKamiTranslations(locale: Lang) {
-  return (tentangKamiTranslations as any)[locale] || tentangKamiTranslations.en;
+export type TentangKamiTranslations = (typeof tentangKamiTranslations)[Lang];
+
+export function getTentangKamiTranslations(locale: Lang): TentangKamiTranslations {
+  return tentangKamiTranslations[locale] ?? tentangKamiTranslations.en;
 }

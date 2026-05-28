@@ -80,19 +80,13 @@ export default function Footer() {
             <ul className="space-y-3">
               {infoLinks.map((item) => (
                 <li key={item.label}>
-                  {item.disabled ? (
-                    <span className="text-sm text-[#9A9A9A]/40 cursor-not-allowed">
-                      {item.label}
-                    </span>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className="text-sm text-[#9A9A9A] hover:text-[#D4B87A] transition-colors duration-300 inline-flex items-center group"
-                    >
-                      <span className="w-0 group-hover:w-4 h-[1px] bg-[#C8A96E] mr-0 group-hover:mr-2 transition-all duration-300" />
-                      {item.label}
-                    </Link>
-                  )}
+                  <Link
+                    href={item.href}
+                    className="text-sm text-[#9A9A9A] hover:text-[#D4B87A] transition-colors duration-300 inline-flex items-center group"
+                  >
+                    <span className="w-0 group-hover:w-4 h-[1px] bg-[#C8A96E] mr-0 group-hover:mr-2 transition-all duration-300" />
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
