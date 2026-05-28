@@ -1,4 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LamitaWebsite
+
+Omah Lamita — handmade ethnic accessories website (Next.js + TypeScript)
+
+**Project**: A marketing site for LAMITA showcasing products, brand story, materials, and contact channels.
+
+**Tech**: Next.js, React, TypeScript, Tailwind CSS, Framer Motion
+
+**Quick Start**
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start development server:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+npm run start
+```
+
+**i18n / Language support**
+- Locale provider: [src/components/providers/LocaleProvider.tsx](src/components/providers/LocaleProvider.tsx)
+- Toggle language using the globe button in the navbar (ID / EN).
+- `tentang-kami` translations: [src/lib/translations.ts](src/lib/translations.ts)
+
+**Files of interest**
+- [src/app/tentang-kami/page.tsx](src/app/tentang-kami/page.tsx) — page entry
+- [src/components/about/TentangKamiContent.tsx](src/components/about/TentangKamiContent.tsx) — translated content
+
+**Contributing**
+If you'd like help wiring other pages for i18n we can add translation objects and swap content similarly.
+
+**Contributors**
+- Putra Abyasa Wedha (2902583635)This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
