@@ -262,7 +262,7 @@ export default function TentangKamiContent() {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-            {t.teamMembers.map((member, i) => (
+            {t.teamMembers.map((member: any, i: number) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, y: 30 }}
