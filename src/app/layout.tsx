@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     "ethnic accessories Indonesia",
     "Malang",
   ],
+  icons: {
+    icon: "/images/brand/FlowerLogoLamitaWhiteBG.png",
+  },
   openGraph: {
     title: "Omah Lamita — Handmade Ethnic Accessories",
     description:

@@ -28,15 +28,13 @@ export default function Footer() {
   const isId = locale === "id";
   const infoLinks = [
     { label: isId ? "Katalog" : "Catalog", href: "/katalog" },
-    { label: isId ? "Tentang Kami" : "About Us", href: "#", disabled: true },
-    { label: isId ? "Tanya Jawab" : "FAQ", href: "#", disabled: true },
-    { label: isId ? "Lokasi" : "Location", href: "#", disabled: true },
+    { label: isId ? "Tentang Kami" : "About Us", href: "/tentang-kami" },
   ];
 
   return (
     <footer className="relative bg-[#0D0D0D] border-t border-[#C8A96E]/10 overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-[url('/images/brand/FooterBG.png')] bg-bottom bg-no-repeat bg-contain opacity-90"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-[url('/images/brand/FooterBG.png')] bg-bottom bg-no-repeat bg-contain opacity-90"
         aria-hidden="true"
       />
       {/* Grain overlay */}

@@ -3,139 +3,148 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
-import { featuredProducts, formatPrice } from "@/lib/mockData";
+import Link from "next/link";
 import { useLocale } from "@/components/providers/LocaleProvider";
+
+const categoryCards = [
+  {
+    image: "/images/products/earring-1.png",
+    labelId: "ANTING",
+    labelEn: "EARRINGS",
+  },
+  {
+    image: "/images/products/necklace-1.png",
+    labelId: "KALUNG",
+    labelEn: "NECKLACES",
+  },
+  {
+    image: "/images/products/lanyard-1.png",
+    labelId: "LANYARD",
+    labelEn: "LANYARDS",
+  },
+  {
+    image: "/images/products/earring-2.png",
+    labelId: "ANTING",
+    labelEn: "EARRINGS",
+  },
+  {
+    image: "/images/products/necklace-2.png",
+    labelId: "KALUNG",
+    labelEn: "NECKLACES",
+  },
+  {
+    image: "/images/products/lanyard-2.png",
+    labelId: "LANYARD",
+    labelEn: "LANYARDS",
+  },
+];
 
 export default function RecommendationSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
   const { locale } = useLocale();
   const isId = locale === "id";
+
   const copy = isId
     ? {
-        title: "REKOMENDASI",
-        subtitle: "Pilihan terbaik dari koleksi kami",
-        viewAll: "Lihat Semua Produk",
+        tagline: "AKSESORI ETNIK HANDMADE",
+        subtitle: "UNTUK SETIAP GAYA",
+        headlineTop: "Jelajahi",
+        headlineBottom: "Lamita",
+        cta: "JELAJAHI SEKARANG",
       }
     : {
-        title: "RECOMMENDATIONS",
-        subtitle: "The best picks from our collection",
-        viewAll: "View All Products",
+        tagline: "HANDMADE ETHNIC ACCESSORIES",
+        subtitle: "FOR EVERY STYLE",
+        headlineTop: "Discover",
+        headlineBottom: "Lamita",
+        cta: "EXPLORE NOW",
       };
-  const categoryLabels = {
-    lanyard: { id: "Lanyard", en: "Lanyard" },
-    kalung: { id: "Kalung", en: "Necklace" },
-    anting: { id: "Anting", en: "Earrings" },
-  } as const;
 
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 md:py-32 bg-[#1A1A1A] overflow-hidden"
+      className="relative py-20 md:py-28 lg:py-32 bg-[#F5F0EB] overflow-hidden"
     >
-      {/* Subtle top border glow */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C8A96E]/20 to-transparent" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-          className="text-center mb-16"
-        >
-          <h2 className="decorative-line text-3xl md:text-4xl lg:text-5xl font-bold tracking-wider text-[#F5F0EB] font-[family-name:var(--font-playfair-display)]">
-            {copy.title}
-          </h2>
-          <p className="mt-4 text-[#9A9A9A] text-sm tracking-wider">
-            {copy.subtitle}
-          </p>
-        </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          {/* Left Side — Text Block */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.9, ease: [0.4, 0, 0.2, 1] }}
+            className="lg:col-span-4 text-center lg:text-left"
+          >
+            {/* Tagline */}
+            <p className="text-xs sm:text-sm tracking-[0.25em] uppercase text-[#9A8A6A] mb-2 font-medium">
+              {copy.tagline}
+            </p>
+            <p className="text-xs sm:text-sm tracking-[0.25em] uppercase text-[#9A8A6A] mb-8 font-medium">
+              {copy.subtitle}
+            </p>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {featuredProducts.map((product, index) => {
-            const productName = isId ? product.nameId : product.nameEn;
-            const categoryLabel = isId
-              ? categoryLabels[product.category].id
-              : categoryLabels[product.category].en;
+            {/* Large Heading */}
+            <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl font-bold text-[#1A1A1A] font-[family-name:var(--font-playfair-display)] leading-[1.1] mb-10">
+              {copy.headlineTop}
+              <br />
+              <span className="italic">{copy.headlineBottom}</span>
+            </h2>
 
-            return (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{
-                duration: 0.7,
-                delay: 0.2 + index * 0.15,
-                ease: [0.4, 0, 0.2, 1],
-              }}
-              className="group cursor-pointer"
-            >
-              {/* Image Container */}
-              <div className="relative aspect-square overflow-hidden rounded-sm bg-[#0D0D0D] img-zoom">
-                <Image
-                  src={product.image}
-                  alt={productName}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            {/* CTA Button */}
+            <Link href="/katalog">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center justify-center px-8 py-3.5 border-1.5 border-[#1A1A1A] text-[#1A1A1A] text-sm font-medium tracking-[0.15em] uppercase bg-transparent hover:bg-[#1A1A1A] hover:text-[#F5F0EB] transition-all duration-400 cursor-pointer"
+              >
+                {copy.cta}
+              </motion.button>
+            </Link>
+          </motion.div>
 
-                {/* Category Badge */}
-                <div className="absolute top-3 left-3 px-3 py-1 bg-[#0D0D0D]/70 backdrop-blur-sm border border-[#C8A96E]/20 rounded-sm">
-                  <span className="text-[10px] tracking-wider uppercase text-[#C8A96E]">
-                    {categoryLabel}
-                  </span>
-                </div>
+          {/* Right Side — Category Grid */}
+          <div className="lg:col-span-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
+              {categoryCards.map((card, index) => {
+                const label = isId ? card.labelId : card.labelEn;
 
-                {/* Price on hover */}
-                <motion.div
-                  className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                >
-                  <span className="px-3 py-1.5 bg-[#C8A96E] text-[#0D0D0D] text-xs font-semibold tracking-wider rounded-sm">
-                    {formatPrice(product.price)}
-                  </span>
-                </motion.div>
-              </div>
+                return (
+                  <motion.div
+                    key={`${card.labelId}-${index}`}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{
+                      duration: 0.6,
+                      delay: 0.15 + index * 0.1,
+                      ease: [0.4, 0, 0.2, 1],
+                    }}
+                  >
+                    <Link href="/katalog" className="group block">
+                      {/* Image Card */}
+                      <div className="relative aspect-square overflow-hidden bg-[#EDEAE5] rounded-sm">
+                        <Image
+                          src={card.image}
+                          alt={label}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                        />
+                        {/* Subtle overlay on hover */}
+                        <div className="absolute inset-0 bg-[#1A1A1A]/0 group-hover:bg-[#1A1A1A]/10 transition-all duration-500" />
+                      </div>
 
-              {/* Product Name */}
-              <div className="mt-4 text-center">
-                <h3 className="text-sm md:text-base tracking-wider text-[#F5F0EB] group-hover:text-[#C8A96E] transition-colors duration-300 font-[family-name:var(--font-playfair-display)]">
-                  {productName}
-                </h3>
-                <p className="mt-1 text-xs text-[#9A9A9A]">
-                  {formatPrice(product.price)}
-                </p>
-              </div>
-            </motion.div>
-          );
-          })}
+                      {/* Category Label */}
+                      <p className="mt-3 text-center text-xs sm:text-sm tracking-[0.2em] uppercase text-[#4A4A4A] font-medium group-hover:text-[#1A1A1A] transition-colors duration-300">
+                        {label}
+                      </p>
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
         </div>
-
-        {/* View All Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-14"
-        >
-          <a href="/katalog">
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="btn-gold"
-            >
-              {copy.viewAll}
-            </motion.button>
-          </a>
-        </motion.div>
       </div>
-
-      {/* Subtle bottom border glow */}
-      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C8A96E]/20 to-transparent" />
     </section>
   );
 }

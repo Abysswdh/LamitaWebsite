@@ -203,7 +203,7 @@ export default function TentangKamiContent() {
             {/* Vertical line */}
             <div className="absolute left-4 md:left-1/2 md:-translate-x-[0.5px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#C8A96E]/40 via-[#C8A96E]/20 to-transparent" />
 
-            {t.timeline.map((item, i) => (
+            {t.timeline.map((item: { year: string; title: string; desc: string }, i: number) => (
               <motion.div
                 key={item.year}
                 initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
