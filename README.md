@@ -1,19 +1,28 @@
 # LamitaWebsite
 
-Omah Lamita — handmade ethnic accessories website (Next.js + TypeScript)
+Omah Lamita is a handmade ethnic accessories website built with Next.js and TypeScript.
 
-**Project**: A marketing site for LAMITA showcasing products, brand story, materials, and contact channels.
+## Project Overview
 
-**Tech**: Next.js, React, TypeScript, Tailwind CSS, Framer Motion
+This site showcases LAMITA's brand story, product catalog, materials, contact channels, and bilingual content for Indonesian and English visitors.
 
-**Quick Start**
+## Tech Stack
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+
+## Getting Started
+
 Install dependencies:
 
 ```bash
 npm install
 ```
 
-Start development server:
+Run the development server:
 
 ```bash
 npm run dev
@@ -26,52 +35,25 @@ npm run build
 npm run start
 ```
 
-**i18n / Language support**
+## Brand Assets
+
+- Logo with dark-mode treatment: [public/images/brand/Lamita with Logo DM.svg](public/images/brand/Lamita%20with%20Logo%20DM.svg)
+- Logo with light-mode treatment: [public/images/brand/Lamita with Logo LM.svg](public/images/brand/Lamita%20with%20Logo%20LM.svg)
+- Wordmark dark-mode: [public/images/brand/Lamita Wordmark DM.svg](public/images/brand/Lamita%20Wordmark%20DM.svg)
+- Wordmark light-mode: [public/images/brand/Lamita Wordmark LM.svg](public/images/brand/Lamita%20Wordmark%20LM.svg)
+
+## Language Support
+
 - Locale provider: [src/components/providers/LocaleProvider.tsx](src/components/providers/LocaleProvider.tsx)
-- Toggle language using the globe button in the navbar (ID / EN).
+- Language toggle: the globe button in the navbar switches between `ID` and `EN`.
 - `tentang-kami` translations: [src/lib/translations.ts](src/lib/translations.ts)
 
-**Files of interest**
-- [src/app/tentang-kami/page.tsx](src/app/tentang-kami/page.tsx) — page entry
-- [src/components/about/TentangKamiContent.tsx](src/components/about/TentangKamiContent.tsx) — translated content
+## Key Files
 
-**Contributing**
-If you'd like help wiring other pages for i18n we can add translation objects and swap content similarly.
+- [src/app/tentang-kami/page.tsx](src/app/tentang-kami/page.tsx) — about page entry
+- [src/components/about/TentangKamiContent.tsx](src/components/about/TentangKamiContent.tsx) — about page content
+- [src/components/layout/Navbar.tsx](src/components/layout/Navbar.tsx) — navigation and language toggle
 
-**Contributors**
-- Putra Abyasa Wedha (2902583635)This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Contributor
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Putra Abyasa Wedha (2902583635)
