@@ -293,7 +293,7 @@ export default function TentangKamiContent() {
 
                 {/* Responsibilities */}
                 <div className="flex flex-wrap gap-2">
-                  {member.responsibilities.map((r) => (
+                  {member.responsibilities.map((r: string) => (
                     <span
                       key={r}
                       className="px-3 py-1.5 text-[10px] tracking-wider text-[#9A9A9A] bg-[#1A1A1A] rounded-full border border-[#2A2A2A]"
