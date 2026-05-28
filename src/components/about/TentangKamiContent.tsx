@@ -11,6 +11,8 @@ import {
   Heart,
   Calendar,
 } from "lucide-react";
+import { useLocale } from "@/components/providers/LocaleProvider";
+import { getTentangKamiTranslations } from "@/lib/translations";
 
 /* ──────────────────────── tiny helpers ──────────────────────── */
 
@@ -64,101 +66,20 @@ function SectionTitle({
 
 /* ──────────────────────── timeline data ──────────────────────── */
 
-const timeline = [
-  {
-    year: "2019",
-    title: "The Beginning",
-    desc: "LAMITA was founded on February 1, 2019 in Malang by Setyo Lesmono and Irena Iswari. Starting from a shared interest in arts and sewing skills, we began producing ethnic accessories such as necklaces, selling locally and opening our first shop on Shopee.",
-  },
-  {
-    year: "2020",
-    title: "Surviving the Pandemic",
-    desc: "The Covid-19 pandemic significantly reduced sales. We innovated by making mask straps, ID lanyards, and developed a thick ginger syrup — a family recipe. The Lamita Jaya business unit was born.",
-  },
-  {
-    year: "2021",
-    title: "Certification & Growth",
-    desc: "We obtained PIRT and halal certification for the ginger syrup. We registered the LAMITA trademark and received guidance from Bina Nusantara University Malang. Ethnic accessories production increased.",
-  },
-  {
-    year: "2022",
-    title: "Offline Expansion",
-    desc: "We expanded offline through consignment in stores, hotels, and cafes. LAMITA became officially certified by the Ministry of Law & Human Rights. Our products became available in several souvenir centers in Malang and Surabaya.",
-  },
-  {
-    year: "2023 - Present",
-    title: "Ongoing Innovation",
-    desc: "We continue to innovate despite global economic challenges. We dream of developing electroforming techniques for authentic 'Malangan' themed ethnic accessories — inspired by Malang's cultural heritage.",
-  },
-];
-
 /* ──────────────────────── materials data ──────────────────────── */
-
-const materials = [
-  {
-    name: "Coffee Wood Beads",
-    origin: "Desa Tutul, Jember",
-    desc: "Polished coffee wood waste turned into beautiful beads",
-  },
-  {
-    name: "Glass Beads",
-    origin: "Desa Gudo, Jombang",
-    desc: "Colorful glass beads from local artisans",
-  },
-  {
-    name: "Silver",
-    origin: "Kotagede, Yogyakarta",
-    desc: "High-quality silver craftsmanship",
-  },
-  {
-    name: "Batik Wood",
-    origin: "Bantul, Yogyakarta",
-    desc: "Wood painted with batik motifs by hand",
-  },
-  {
-    name: "Handwoven Fabric",
-    origin: "Desa Troso, Jepara",
-    desc: "Traditional weaving with distinctive motifs",
-  },
-  {
-    name: "Batik & Lurik Fabrics",
-    origin: "Surakarta",
-    desc: "Authentic Solo batik and lurik",
-  },
-];
 
 /* ──────────────────────── team data ──────────────────────── */
 
-const teamMembers = [
-  {
-    name: "Setyo Lesmono",
-    role: "Founder & Director",
-    desc: "Certified digital marketing practitioner. Former community development facilitator for 18 years at Wahana Visi Indonesia. Graduate in English Literature from DR Soetomo University, Surabaya.",
-    responsibilities: [
-      "Marketing & Partnerships",
-      "Marketplace & SEO",
-      "Content Creator",
-      "Photographer",
-    ],
-  },
-  {
-    name: "Irena Iswari",
-    role: "Co-Founder & Product Designer",
-    desc: "Co-founder with an architectural background. Designs products and packaging, transforming local materials into beautiful ethnic accessory pieces.",
-    responsibilities: [
-      "Design & Accessories Production",
-      "Financial Records",
-      "Instagram Manager",
-      "Graphic Design",
-    ],
-  },
-];
+// use translations for content so it supports both languages
+const useTranslations = (locale: "id" | "en") => getTentangKamiTranslations(locale as any);
 
 /* ══════════════════════════════════════════════════════════════ */
 /*  MAIN COMPONENT                                              */
 /* ══════════════════════════════════════════════════════════════ */
 
 export default function TentangKamiContent() {
+  const { locale } = useLocale();
+  const t = useTranslations(locale);
   return (
     <div className="bg-[#0D0D0D]">
       {/* ─── HERO ─── */}
@@ -188,7 +109,7 @@ export default function TentangKamiContent() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="inline-block text-xs tracking-[0.3em] uppercase text-[#C8A96E] mb-4"
           >
-            About Us
+            {t.hero.small}
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -196,7 +117,7 @@ export default function TentangKamiContent() {
             transition={{ duration: 1, delay: 0.7 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-wider text-[#F5F0EB] font-[family-name:var(--font-playfair-display)] leading-tight mb-6"
           >
-            OUR <span className="text-gold-gradient">STORY</span>
+            {t.hero.titleMain} <span className="text-gold-gradient">{t.hero.titleAccent}</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -204,8 +125,7 @@ export default function TentangKamiContent() {
             transition={{ duration: 0.8, delay: 1 }}
             className="text-[#9A9A9A] text-sm md:text-base max-w-lg mx-auto leading-relaxed"
           >
-            From creative hands in Malang, we craft ethnic accessories that
-            radiate the beauty of Indonesian culture.
+            {t.hero.paragraph}
           </motion.p>
         </div>
       </section>
@@ -222,19 +142,16 @@ export default function TentangKamiContent() {
                 <span className="text-6xl text-[#C8A96E] opacity-60">✿</span>
               </div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-wider text-[#F5F0EB] font-[family-name:var(--font-playfair-display)] mb-6 leading-snug">
-                What <span className="text-gold-gradient">LAMITA</span> Means
+                {t.brand.heading}
               </h2>
               <p className="text-[#C8A96E] text-sm tracking-wider italic font-[family-name:var(--font-playfair-display)] mb-6">
-                which signifies something dynamic, full of energy and spirit.
+                {t.brand.lead}
               </p>
               <p className="text-[#9A9A9A] text-sm leading-relaxed mb-6">
-                The word underpins our intention when blending various materials,
-                hoping to create handcrafted pieces that allow their wearers to
-                radiate natural beauty.
+                {t.brand.para1}
               </p>
               <p className="text-[#F5F0EB]/80 text-sm leading-relaxed">
-                Lamita is a place where you can find ethnic accessories that
-                harmonize with your beauty.
+                {t.brand.para2}
               </p>
             </div>
 
@@ -243,16 +160,12 @@ export default function TentangKamiContent() {
               <div className="p-8 bg-[#0D0D0D] rounded-sm border border-[#C8A96E]/10">
                 <div className="flex items-center gap-3 mb-4">
                   <Sparkles size={18} className="text-[#C8A96E]" />
-                  <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-[#F5F0EB]">
-                    Vision & Mission
-                  </h3>
+                    <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-[#F5F0EB]">
+                      {t.vision.title}
+                    </h3>
                 </div>
                 <p className="text-[#9A9A9A] text-sm leading-relaxed">
-                  Everyone can own, feel, and bring out their best look through the
-                  accessories they wear. We position ourselves as makers of ethnic
-                  accessories that are unique yet affordably priced — producing
-                  creations that are not only <em className="text-[#C8A96E]">customized</em>
-                  but also <em className="text-[#C8A96E]">personalized</em>.
+                  {t.vision.text}
                 </p>
               </div>
 
@@ -260,16 +173,14 @@ export default function TentangKamiContent() {
                 <div className="flex items-center gap-3 mb-4">
                   <Heart size={18} className="text-[#C8A96E]" />
                   <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-[#F5F0EB]">
-                    Work Culture
+                    {t.culture.title}
                   </h3>
                 </div>
                 <p className="text-[#C8A96E] italic font-[family-name:var(--font-playfair-display)] text-lg mb-2">
-                  &ldquo;Mangajapa Becik&rdquo;
+                  &ldquo;{t.culture.proverb}&rdquo;
                 </p>
                 <p className="text-[#9A9A9A] text-sm leading-relaxed">
-                  A Javanese proverb passed down from our parents, reminding us to
-                  keep optimism and good hope in everything we do. Mangajapa becik
-                  — hope for the good.
+                  {t.culture.text}
                 </p>
               </div>
             </div>
@@ -283,16 +194,16 @@ export default function TentangKamiContent() {
       <Section className="py-20 md:py-28 bg-[#0D0D0D]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            sub="Our Journey"
-            main="BUSINESS HISTORY"
-            desc="From a home enterprise in Malang to a nationally certified brand"
+            sub={t.sectionTitles.journey.sub}
+            main={t.sectionTitles.journey.main}
+            desc={t.sectionTitles.journey.desc}
           />
 
           <div className="relative">
             {/* Vertical line */}
             <div className="absolute left-4 md:left-1/2 md:-translate-x-[0.5px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#C8A96E]/40 via-[#C8A96E]/20 to-transparent" />
 
-            {timeline.map((item, i) => (
+            {t.timeline.map((item, i) => (
               <motion.div
                 key={item.year}
                 initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
@@ -345,13 +256,13 @@ export default function TentangKamiContent() {
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            sub="Our Team"
-            main="OMAH LAMITA"
-            desc="A family business built with love and artistic talent"
+            sub={t.sectionTitles.team.sub}
+            main={t.sectionTitles.team.main}
+            desc={t.sectionTitles.team.desc}
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-            {teamMembers.map((member, i) => (
+            {t.teamMembers.map((member, i) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, y: 30 }}
@@ -404,10 +315,7 @@ export default function TentangKamiContent() {
             className="mt-10 text-center"
           >
             <p className="text-[#9A9A9A] text-sm leading-relaxed max-w-2xl mx-auto">
-              Together with other family members — Agnes, Constantia, Agatha, and
-              Ari — we handle the entire creative process from design, production,
-              QC, packing, to marketing. <span className="text-[#C8A96E]">6 creative
-              team members</span> produce 1,000–1,250 accessories per month.
+              {t.teamExtra}
             </p>
           </motion.div>
         </div>
@@ -419,9 +327,9 @@ export default function TentangKamiContent() {
       <Section className="py-20 md:py-28 bg-[#0D0D0D]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            sub="Raw Materials"
-            main="FROM LOCAL ARTISANS"
-            desc="We source materials from various local artisans in Indonesia, including coffee wood and recycled glass"
+            sub={t.sectionTitles.materials.sub}
+            main={t.sectionTitles.materials.main}
+            desc={t.sectionTitles.materials.desc}
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -445,7 +353,7 @@ export default function TentangKamiContent() {
 
             {/* Material grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {materials.map((mat, i) => (
+              {t.materials.map((mat, i) => (
                 <motion.div
                   key={mat.name}
                   initial={{ opacity: 0, y: 20 }}
@@ -454,7 +362,7 @@ export default function TentangKamiContent() {
                   transition={{ duration: 0.5, delay: i * 0.08 }}
                   className="p-5 bg-[#1A1A1A] rounded-sm border border-[#2A2A2A] hover:border-[#C8A96E]/20 transition-all duration-300 group"
                 >
-                  <h4 className="text-sm font-semibold text-[#F5F0EB] mb-1 group-hover:text-[#C8A96E] transition-colors">
+                    <h4 className="text-sm font-semibold text-[#F5F0EB] mb-1 group-hover:text-[#C8A96E] transition-colors">
                     {mat.name}
                   </h4>
                   <div className="flex items-center gap-1.5 mb-2">
@@ -464,7 +372,7 @@ export default function TentangKamiContent() {
                     </span>
                   </div>
                   <p className="text-[#9A9A9A] text-xs leading-relaxed">
-                    {mat.desc}
+                      {mat.desc}
                   </p>
                 </motion.div>
               ))}
@@ -491,17 +399,21 @@ export default function TentangKamiContent() {
           </motion.div>
 
           <h2 className="text-2xl md:text-3xl font-bold tracking-wider text-[#F5F0EB] font-[family-name:var(--font-playfair-display)] mb-6">
-            Tanjung Flower <span className="text-gold-gradient">Symbol</span>
+            {t.tanjung.title.split(' ').slice(0, -1).join(' ')} <span className="text-gold-gradient">{t.tanjung.title.split(' ').slice(-1)}</span>
           </h2>
 
           <p className="text-[#9A9A9A] text-sm md:text-base leading-relaxed mb-6 max-w-xl mx-auto">
-            LAMITA adopts the Tanjung flower symbol taken from the Javanese
-            traditional fabric motif <span className="text-[#C8A96E] italic">Truntum</span>
-            as a hallmark of our products.
+            {t.tanjung.desc.split('Truntum').map((part, idx) => (
+              idx === 1 ? (
+                <span key={idx} className="text-[#C8A96E] italic">Truntum</span>
+              ) : (
+                part
+              )
+            ))}
           </p>
 
           <p className="text-[#C8A96E] italic font-[family-name:var(--font-playfair-display)] text-lg leading-relaxed max-w-lg mx-auto">
-            Taruntum — true love that always blossoms anew.
+            {t.tanjung.quote}
           </p>
         </div>
 
@@ -512,9 +424,9 @@ export default function TentangKamiContent() {
       <Section className="py-20 md:py-28 bg-[#0D0D0D]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <SectionTitle
-            sub="Contact Us"
-            main="FRIENDS OF LAMITA"
-            desc="Showcase your beauty — we're ready to help you find the perfect ethnic accessory"
+            sub={t.sectionTitles.contact.sub}
+            main={t.sectionTitles.contact.main}
+            desc={t.sectionTitles.contact.desc}
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -529,7 +441,7 @@ export default function TentangKamiContent() {
                 className="text-[#25D366] mx-auto mb-3 group-hover:scale-110 transition-transform"
               />
               <h4 className="text-sm font-semibold text-[#F5F0EB] mb-1">
-                WhatsApp
+                {t.contactLabels.whatsapp}
               </h4>
               <p className="text-xs text-[#9A9A9A]">0819-9434-3432</p>
             </a>
@@ -556,7 +468,7 @@ export default function TentangKamiContent() {
                 <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
               </svg>
               <h4 className="text-sm font-semibold text-[#F5F0EB] mb-1">
-                Instagram
+                {t.contactLabels.instagram}
               </h4>
               <p className="text-xs text-[#9A9A9A]">
                 @kalungbatik_omahlamita
@@ -569,7 +481,7 @@ export default function TentangKamiContent() {
                 className="text-[#C8A96E] mx-auto mb-3"
               />
               <h4 className="text-sm font-semibold text-[#F5F0EB] mb-1">
-                Workshop
+                {t.contactLabels.workshop}
               </h4>
               <p className="text-xs text-[#9A9A9A] leading-relaxed">
                 Jl Mertojoyo Blok L No 6
