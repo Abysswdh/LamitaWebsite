@@ -3,15 +3,40 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 export default function HeroSection() {
+  const { locale } = useLocale();
+  const copy =
+    locale === "id"
+      ? {
+          subtitle: "aksesoris etnik handmade",
+          headlineTop: "PANCARKAN",
+          headlineBottom: "JELITAMU",
+          tagline:
+            "Pancarkan jelitamu dengan perhiasan etnik handmade dari hati Indonesia",
+          cta: "BELANJA SEKARANG",
+          scroll: "GULIR",
+          imageAlt: "Aksesoris etnik handmade Lamita",
+        }
+      : {
+          subtitle: "handmade ethnic accessories",
+          headlineTop: "RADIATE",
+          headlineBottom: "YOUR BEAUTY",
+          tagline:
+            "Radiate your beauty with handcrafted ethnic jewelry from the heart of Indonesia",
+          cta: "SHOP NOW",
+          scroll: "SCROLL",
+          imageAlt: "Lamita handmade ethnic accessories",
+        };
+
   return (
     <section className="relative min-h-[720px] h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
           src="/images/hero/hero-bg.png"
-          alt="LAMITA handmade ethnic accessories"
+          alt={copy.imageAlt}
           fill
           className="object-cover"
           priority
@@ -41,7 +66,7 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="text-sm md:text-base tracking-[0.3em] uppercase text-[#C8A96E] mb-6"
         >
-          handmade ethnic accessories
+          {copy.subtitle}
         </motion.p>
 
         {/* Main Headline */}
@@ -51,9 +76,9 @@ export default function HeroSection() {
           transition={{ duration: 1, delay: 0.7, ease: [0.4, 0, 0.2, 1] }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-wider text-[#F5F0EB] drop-shadow-[0_8px_30px_rgba(0,0,0,0.8)] font-[family-name:var(--font-playfair-display)] leading-tight mb-4"
         >
-          <span className="text-gold-gradient">PANCARKAN</span>
+          <span className="text-gold-gradient">{copy.headlineTop}</span>
           <br />
-          <span className="text-[#F5F0EB]">JELITAMU</span>
+          <span className="text-[#F5F0EB]">{copy.headlineBottom}</span>
         </motion.h1>
 
         {/* Tagline */}
@@ -63,7 +88,7 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 1 }}
           className="text-[#F5F0EB]/80 text-sm md:text-base tracking-wider mb-10 max-w-md mx-auto"
         >
-          Radiate your beauty with handcrafted ethnic jewelry from the heart of Indonesia
+          {copy.tagline}
         </motion.p>
 
         {/* CTA Button */}
@@ -78,7 +103,7 @@ export default function HeroSection() {
               whileTap={{ scale: 0.95 }}
               className="btn-gold text-base px-10 py-4"
             >
-              SHOPPING NOW
+              {copy.cta}
             </motion.button>
           </Link>
         </motion.div>
@@ -100,7 +125,7 @@ export default function HeroSection() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <span className="text-[10px] tracking-[0.3em] uppercase text-[#9A9A9A]/60">
-          Scroll
+          {copy.scroll}
         </span>
         <motion.div
           animate={{ y: [0, 8, 0] }}

@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ShoppingBag } from "lucide-react";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 function InstagramIcon({ size = 18, className = "" }: { size?: number; className?: string }) {
   return (
@@ -17,6 +18,29 @@ function InstagramIcon({ size = 18, className = "" }: { size?: number; className
 export default function CTASection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const { locale } = useLocale();
+  const isId = locale === "id";
+  const copy = isId
+    ? {
+        shopeeTitleTop: "LIHAT KATALOG",
+        shopeeTitleBottom: "PRODUK-PRODUK KAMI",
+        shopeeDescription:
+          "Jelajahi koleksi lengkap aksesoris etnik handmade di Shopee kami",
+        instagramTitleTop: "UPDATE",
+        instagramTitleBottom: "INSTAGRAM KAMI",
+        instagramDescription:
+          "Ikuti kami di Instagram untuk update produk terbaru dan inspirasi gaya",
+      }
+    : {
+        shopeeTitleTop: "SEE OUR CATALOG",
+        shopeeTitleBottom: "OUR PRODUCTS",
+        shopeeDescription:
+          "Explore our full collection of handmade ethnic accessories on Shopee",
+        instagramTitleTop: "FOLLOW",
+        instagramTitleBottom: "OUR INSTAGRAM",
+        instagramDescription:
+          "Follow us on Instagram for the latest products and style inspiration",
+      };
 
   return (
     <section ref={sectionRef} className="relative py-20 md:py-28 bg-[#0D0D0D]">
@@ -45,13 +69,13 @@ export default function CTASection() {
               </div>
 
               <h3 className="text-xl md:text-2xl font-bold tracking-wider text-[#F5F0EB] font-[family-name:var(--font-playfair-display)] mb-6 leading-relaxed">
-                LIHAT KATALOG
+                {copy.shopeeTitleTop}
                 <br />
-                <span className="text-gold-gradient">PRODUK-PRODUK KAMI</span>
+                <span className="text-gold-gradient">{copy.shopeeTitleBottom}</span>
               </h3>
 
               <p className="text-[#9A9A9A] text-sm mb-8 max-w-xs">
-                Jelajahi koleksi lengkap aksesoris etnik handmade di Shopee kami
+                {copy.shopeeDescription}
               </p>
 
               <a
@@ -97,13 +121,13 @@ export default function CTASection() {
               </div>
 
               <h3 className="text-xl md:text-2xl font-bold tracking-wider text-[#F5F0EB] font-[family-name:var(--font-playfair-display)] mb-6 leading-relaxed">
-                UPDATE
+                {copy.instagramTitleTop}
                 <br />
-                <span className="text-gold-gradient">INSTAGRAM KAMI</span>
+                <span className="text-gold-gradient">{copy.instagramTitleBottom}</span>
               </h3>
 
               <p className="text-[#9A9A9A] text-sm mb-8 max-w-xs">
-                Ikuti kami di Instagram untuk update produk terbaru dan inspirasi gaya
+                {copy.instagramDescription}
               </p>
 
               <a

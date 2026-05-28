@@ -1,11 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 export default function WhatsAppButton() {
+  const { locale } = useLocale();
+  const isId = locale === "id";
+  const message = isId ? "Halo Omah Lamita!" : "Hello Omah Lamita!";
+  const href = `https://wa.me/6281994343432?text=${encodeURIComponent(message)}`;
+
   return (
     <motion.a
-      href="https://wa.me/6281994343432?text=Halo%20Omah%20Lamita!"
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       initial={{ scale: 0, opacity: 0 }}
@@ -19,7 +25,7 @@ export default function WhatsAppButton() {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(37,211,102,0.4)] animate-pulse-glow group cursor-pointer"
-      aria-label="Chat on WhatsApp"
+      aria-label={isId ? "Chat di WhatsApp" : "Chat on WhatsApp"}
     >
       {/* WhatsApp Icon */}
       <svg
@@ -32,7 +38,7 @@ export default function WhatsAppButton() {
 
       {/* Hover tooltip */}
       <span className="absolute right-full mr-3 px-3 py-1.5 bg-[#0D0D0D] border border-[#C8A96E]/20 text-[#F5F0EB] text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        Chat with us!
+        {isId ? "Chat dengan kami!" : "Chat with us!"}
       </span>
     </motion.a>
   );

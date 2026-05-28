@@ -2,27 +2,22 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, Globe, ShoppingBag } from "lucide-react";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 const navLinks = [
   { href: "/", labelId: "Beranda", labelEn: "Home", external: false, disabled: false },
-  {
-    href: "https://instagram.com/kalungbatik_omahlamita",
-    labelId: "Instagram",
-    labelEn: "Instagram",
-    external: true,
-    disabled: false,
-  },
   { href: "/katalog", labelId: "Katalog", labelEn: "Catalog", external: false, disabled: false },
-  { href: "#", labelId: "Tentang Kami", labelEn: "About Us", external: false, disabled: true },
+  { href: "/tentang-kami", labelId: "Tentang Kami", labelEn: "About Us", external: false, disabled: false },
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [locale, setLocale] = useState<"id" | "en">("id");
+  const { locale, toggleLocale } = useLocale();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -33,7 +28,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -58,92 +52,98 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "bg-[#0D0D0D]/95 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
-            : "bg-gradient-to-b from-[#0D0D0D]/75 to-transparent"
+            ? "bg-[#0D0D0D]/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+            : "bg-gradient-to-b from-[#0D0D0D]/40 via-[#0D0D0D]/20 to-transparent backdrop-blur-md"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <Link href="/" className="relative group">
-              <motion.span
-                className="text-2xl md:text-3xl font-bold tracking-[0.2em] text-[#F5F0EB] font-[family-name:var(--font-playfair-display)]"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.2 }}
-              >
-                LAMITA
-              </motion.span>
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-[#C8A96E] to-transparent group-hover:w-full transition-all duration-500" />
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1 rounded-full border border-[#C8A96E]/10 bg-[#0D0D0D]/20 px-2 py-1 backdrop-blur-sm">
-              {navLinks.map((link) => {
-                const active = !link.external && !link.disabled && isActive(link.href);
-                const label = locale === "id" ? link.labelId : link.labelEn;
-
-                if (link.disabled) {
-                  return (
-                    <div key={link.href + link.labelId} className="relative group">
-                      <span className="px-4 py-2 text-sm tracking-wider uppercase text-[#9A9A9A]/50 cursor-not-allowed">
-                        {label}
-                      </span>
-                      {/* Coming soon tooltip */}
-                      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-[#1A1A1A] border border-[#C8A96E]/20 text-[#C8A96E] text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
-                        Coming Soon
-                      </span>
-                    </div>
-                  );
-                }
-
-                if (link.external) {
-                  return (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 text-sm tracking-wider uppercase text-[#9A9A9A] hover:text-[#D4B87A] transition-colors duration-300"
-                    >
-                      {label}
-                    </a>
-                  );
-                }
-
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="relative px-4 py-2 text-sm tracking-wider uppercase transition-colors duration-300 group"
-                  >
-                    <span className={active ? "text-[#C8A96E]" : "text-[#9A9A9A] group-hover:text-[#D4B87A]"}>
-                      {label}
-                    </span>
-                    {/* Active indicator */}
-                    {active && (
-                      <motion.span
-                        layoutId="navbar-active"
-                        className="absolute bottom-0 left-4 right-4 h-[2px] bg-gradient-to-r from-transparent via-[#C8A96E] to-transparent"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                      />
-                    )}
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* Right side: Language toggle + mobile menu */}
-            <div className="flex items-center gap-3">
-              {/* Language Toggle */}
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center h-20">
+            {/* Left: Language Switcher */}
+            <div className="flex items-center justify-start">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setLocale(locale === "id" ? "en" : "id")}
+                onClick={toggleLocale}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#C8A96E]/30 text-[#C8A96E] hover:border-[#C8A96E]/60 hover:bg-[#C8A96E]/5 transition-all duration-300 text-xs tracking-wider"
               >
                 <Globe size={14} />
                 <span className="font-medium">{locale === "id" ? "ID" : "EN"}</span>
               </motion.button>
+            </div>
+
+            {/* Center: Logo */}
+            <div className="flex flex-col items-center gap-4">
+              {/* Logo */}
+              <Link href="/" className="relative group shrink-0">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex items-center"
+                >
+                  <Image
+                    src="/images/brand/logoLamita.png"
+                    alt="Lamita Logo"
+                    width={50}
+                    height={50}
+                    className="h-12 w-auto brightness-0 invert"
+                    priority
+                  />
+                </motion.div>
+              </Link>
+            </div>
+
+            {/* Right: Navigation Items and Shopping */}
+            <div className="flex items-center justify-end gap-6">
+              {/* Desktop Navigation Links */}
+              <div className="hidden md:flex items-center gap-4">
+                {navLinks.map((link) => {
+                  const active = !link.external && !link.disabled && isActive(link.href);
+                  const label = locale === "id" ? link.labelId : link.labelEn;
+
+                  if (link.external) {
+                    return (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-2 py-1 text-xs tracking-wider uppercase text-[#9A9A9A] hover:text-[#D4B87A] transition-colors duration-300"
+                      >
+                        {label}
+                      </a>
+                    );
+                  }
+
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="relative px-2 py-1 text-xs tracking-wider uppercase transition-colors duration-300 group"
+                    >
+                      <span className={active ? "text-[#C8A96E]" : "text-[#9A9A9A] group-hover:text-[#D4B87A]"}>
+                        {label}
+                      </span>
+                      {active && (
+                        <motion.span
+                          layoutId="navbar-active-right"
+                          className="absolute bottom-0 left-2 right-2 h-[1px] bg-gradient-to-r from-transparent via-[#C8A96E] to-transparent"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                    </Link>
+                  );
+                })}
+
+                <a
+                  href="https://shopee.co.id/kalungbatik_3iswari"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs tracking-wider uppercase text-[#9A9A9A] hover:text-[#D4B87A] transition-colors duration-300"
+                >
+                  <ShoppingBag size={14} />
+                  <span>{locale === "id" ? "Shopee" : "Shop"}</span>
+                </a>
+              </div>
 
               {/* Mobile Menu Button */}
               <motion.button
@@ -170,7 +170,7 @@ export default function Navbar() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 md:hidden"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
             />
 
             {/* Drawer */}
@@ -179,13 +179,17 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 w-[300px] bg-[#0D0D0D] border-l border-[#C8A96E]/10 z-50 md:hidden flex flex-col"
+              className="fixed top-0 right-0 bottom-0 w-[300px] bg-[#0D0D0D] border-l border-[#C8A96E]/10 z-40 md:hidden flex flex-col"
             >
               {/* Drawer Header */}
               <div className="flex items-center justify-between p-6 border-b border-[#C8A96E]/10">
-                <span className="text-xl font-bold tracking-[0.2em] text-[#F5F0EB] font-[family-name:var(--font-playfair-display)]">
-                  LAMITA
-                </span>
+                <Image
+                  src="/images/brand/logoLamita.png"
+                  alt="Lamita Logo"
+                  width={40}
+                  height={40}
+                  className="h-10 w-auto brightness-0 invert"
+                />
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setIsMobileMenuOpen(false)}

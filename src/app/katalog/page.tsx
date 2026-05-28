@@ -23,7 +23,7 @@ export default function KatalogPage() {
     <>
       <Navbar />
       <main>
-        <ProductGrid locale="id" />
+        <ProductGrid />
       </main>
       <Footer />
       <WhatsAppButton />

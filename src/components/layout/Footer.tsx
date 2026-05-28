@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, MapPin, ShoppingBag } from "lucide-react";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 function FacebookIcon({ size = 14, className = "" }: { size?: number; className?: string }) {
   return (
@@ -19,53 +23,22 @@ function InstagramIcon({ size = 14, className = "" }: { size?: number; className
   );
 }
 
-function TanjungFlowerSVG({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 120 120"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      {/* Outer petals */}
-      {[0, 60, 120, 180, 240, 300].map((angle) => (
-        <ellipse
-          key={angle}
-          cx="60"
-          cy="60"
-          rx="12"
-          ry="30"
-          fill="none"
-          stroke="#C8A96E"
-          strokeWidth="1.5"
-          opacity="0.6"
-          transform={`rotate(${angle} 60 60) translate(0 -18)`}
-        />
-      ))}
-      {/* Inner petals */}
-      {[30, 90, 150, 210, 270, 330].map((angle) => (
-        <ellipse
-          key={`inner-${angle}`}
-          cx="60"
-          cy="60"
-          rx="8"
-          ry="20"
-          fill="#C8A96E"
-          opacity="0.15"
-          transform={`rotate(${angle} 60 60) translate(0 -12)`}
-        />
-      ))}
-      {/* Center circle */}
-      <circle cx="60" cy="60" r="8" fill="#C8A96E" opacity="0.3" />
-      <circle cx="60" cy="60" r="4" fill="#C8A96E" opacity="0.6" />
-      <circle cx="60" cy="60" r="1.5" fill="#C8A96E" opacity="0.9" />
-    </svg>
-  );
-}
-
 export default function Footer() {
+  const { locale } = useLocale();
+  const isId = locale === "id";
+  const infoLinks = [
+    { label: isId ? "Katalog" : "Catalog", href: "/katalog" },
+    { label: isId ? "Tentang Kami" : "About Us", href: "#", disabled: true },
+    { label: isId ? "Tanya Jawab" : "FAQ", href: "#", disabled: true },
+    { label: isId ? "Lokasi" : "Location", href: "#", disabled: true },
+  ];
+
   return (
-    <footer className="relative bg-[#0D0D0D] border-t border-[#C8A96E]/10">
+    <footer className="relative bg-[#0D0D0D] border-t border-[#C8A96E]/10 overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-[url('/images/brand/FooterBG.png')] bg-bottom bg-no-repeat bg-contain opacity-90"
+        aria-hidden="true"
+      />
       {/* Grain overlay */}
       <div className="grain-overlay absolute inset-0 pointer-events-none" />
 
@@ -74,14 +47,22 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-16">
           {/* Column 1: Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <h3 className="text-2xl font-bold tracking-[0.2em] text-[#F5F0EB] font-[family-name:var(--font-playfair-display)] mb-3">
-              LAMITA
-            </h3>
+            <div className="mb-3">
+              <Image
+                src="/images/brand/logoLamita.png"
+                alt="Lamita Logo"
+                width={50}
+                height={50}
+                className="h-12 w-auto brightness-0 invert"
+              />
+            </div>
             <p className="text-sm text-[#C8A96E] tracking-wider mb-4 italic font-[family-name:var(--font-playfair-display)]">
-              Pancarkan Jelitamu
+              {isId ? "Pancarkan Jelitamu" : "Radiate Your Beauty"}
             </p>
             <p className="text-sm text-[#9A9A9A] leading-relaxed max-w-xs">
-              Handmade ethnic accessories crafted with love from Indonesian local materials.
+              {isId
+                ? "Aksesoris etnik handmade yang dibuat dengan cinta dari bahan lokal Indonesia."
+                : "Handmade ethnic accessories crafted with love from Indonesian local materials."}
             </p>
             <div className="flex items-start gap-2 mt-4 text-[#9A9A9A]">
               <MapPin size={16} className="mt-0.5 shrink-0 text-[#C8A96E]/60" />
@@ -96,15 +77,10 @@ export default function Footer() {
           {/* Column 2: Informasi */}
           <div>
             <h4 className="text-sm font-semibold tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">
-              Informasi
+              {isId ? "Informasi" : "Information"}
             </h4>
             <ul className="space-y-3">
-              {[
-                { label: "Katalog", href: "/katalog" },
-                { label: "Tentang Kami", href: "#", disabled: true },
-                { label: "Tanya Jawab", href: "#", disabled: true },
-                { label: "Lokasi", href: "#", disabled: true },
-              ].map((item) => (
+              {infoLinks.map((item) => (
                 <li key={item.label}>
                   {item.disabled ? (
                     <span className="text-sm text-[#9A9A9A]/40 cursor-not-allowed">
@@ -127,7 +103,7 @@ export default function Footer() {
           {/* Column 3: Hubungi Kami */}
           <div>
             <h4 className="text-sm font-semibold tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">
-              Hubungi Kami
+              {isId ? "Hubungi Kami" : "Contact Us"}
             </h4>
             <ul className="space-y-3">
               <li>
@@ -169,7 +145,7 @@ export default function Footer() {
           {/* Column 4: Beli Produk */}
           <div>
             <h4 className="text-sm font-semibold tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">
-              Beli Produk
+              {isId ? "Beli Produk" : "Shop"}
             </h4>
             <a
               href="https://shopee.co.id/kalungbatik_3iswari"
@@ -183,17 +159,11 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Decorative Tanjung Flower */}
-        <div className="flex items-center justify-center mb-8">
-          <div className="h-[1px] flex-1 max-w-[120px] bg-gradient-to-r from-transparent to-[#C8A96E]/30" />
-          <TanjungFlowerSVG className="w-16 h-16 mx-4 animate-float opacity-70" />
-          <div className="h-[1px] flex-1 max-w-[120px] bg-gradient-to-l from-transparent to-[#C8A96E]/30" />
-        </div>
-
         {/* Copyright */}
         <div className="text-center">
           <p className="text-xs text-[#9A9A9A]/50 tracking-wider">
-            © {new Date().getFullYear()} LAMITA by Ethnicware Indonesia. All rights reserved.
+            © {new Date().getFullYear()} LAMITA by Ethnicware Indonesia.{" "}
+            {isId ? "Hak cipta dilindungi." : "All rights reserved."}
           </p>
         </div>
       </div>

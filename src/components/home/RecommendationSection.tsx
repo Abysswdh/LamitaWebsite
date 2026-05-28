@@ -4,10 +4,29 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 import { featuredProducts, formatPrice } from "@/lib/mockData";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 export default function RecommendationSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const { locale } = useLocale();
+  const isId = locale === "id";
+  const copy = isId
+    ? {
+        title: "REKOMENDASI",
+        subtitle: "Pilihan terbaik dari koleksi kami",
+        viewAll: "Lihat Semua Produk",
+      }
+    : {
+        title: "RECOMMENDATIONS",
+        subtitle: "The best picks from our collection",
+        viewAll: "View All Products",
+      };
+  const categoryLabels = {
+    lanyard: { id: "Lanyard", en: "Lanyard" },
+    kalung: { id: "Kalung", en: "Necklace" },
+    anting: { id: "Anting", en: "Earrings" },
+  } as const;
 
   return (
     <section
@@ -26,16 +45,22 @@ export default function RecommendationSection() {
           className="text-center mb-16"
         >
           <h2 className="decorative-line text-3xl md:text-4xl lg:text-5xl font-bold tracking-wider text-[#F5F0EB] font-[family-name:var(--font-playfair-display)]">
-            REKOMENDASI
+            {copy.title}
           </h2>
           <p className="mt-4 text-[#9A9A9A] text-sm tracking-wider">
-            Pilihan terbaik dari koleksi kami
+            {copy.subtitle}
           </p>
         </motion.div>
 
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {featuredProducts.map((product, index) => (
+          {featuredProducts.map((product, index) => {
+            const productName = isId ? product.nameId : product.nameEn;
+            const categoryLabel = isId
+              ? categoryLabels[product.category].id
+              : categoryLabels[product.category].en;
+
+            return (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 40 }}
@@ -51,7 +76,7 @@ export default function RecommendationSection() {
               <div className="relative aspect-square overflow-hidden rounded-sm bg-[#0D0D0D] img-zoom">
                 <Image
                   src={product.image}
-                  alt={product.nameId}
+                  alt={productName}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -62,7 +87,7 @@ export default function RecommendationSection() {
                 {/* Category Badge */}
                 <div className="absolute top-3 left-3 px-3 py-1 bg-[#0D0D0D]/70 backdrop-blur-sm border border-[#C8A96E]/20 rounded-sm">
                   <span className="text-[10px] tracking-wider uppercase text-[#C8A96E]">
-                    {product.category}
+                    {categoryLabel}
                   </span>
                 </div>
 
@@ -79,14 +104,15 @@ export default function RecommendationSection() {
               {/* Product Name */}
               <div className="mt-4 text-center">
                 <h3 className="text-sm md:text-base tracking-wider text-[#F5F0EB] group-hover:text-[#C8A96E] transition-colors duration-300 font-[family-name:var(--font-playfair-display)]">
-                  {product.nameId}
+                  {productName}
                 </h3>
                 <p className="mt-1 text-xs text-[#9A9A9A]">
                   {formatPrice(product.price)}
                 </p>
               </div>
             </motion.div>
-          ))}
+          );
+          })}
         </div>
 
         {/* View All Button */}
@@ -102,7 +128,7 @@ export default function RecommendationSection() {
               whileTap={{ scale: 0.97 }}
               className="btn-gold"
             >
-              Lihat Semua Produk
+              {copy.viewAll}
             </motion.button>
           </a>
         </motion.div>

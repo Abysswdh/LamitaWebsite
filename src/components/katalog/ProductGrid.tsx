@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { products, type Product, type CategoryId } from "@/lib/mockData";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import SearchBar from "./SearchBar";
 import CategoryFilter from "./CategoryFilter";
 import ProductCard from "./ProductCard";
@@ -35,7 +36,9 @@ const itemVariants = {
   },
 };
 
-export default function ProductGrid({ locale = "id" }: ProductGridProps) {
+export default function ProductGrid({ locale: localeProp }: ProductGridProps) {
+  const { locale: contextLocale } = useLocale();
+  const locale = localeProp ?? contextLocale;
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>("semua");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
